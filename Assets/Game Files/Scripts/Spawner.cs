@@ -8,7 +8,7 @@ public class Spawner : MonoBehaviour
     public List<GameObject> ZombiePrefabs;
     public Transform[] SpawnPositions;
     int index;
-    [SerializeField] GameManager Manager;
+
 
     [Header("Spawn Rate")]
     [SerializeField] float SpawnRate = 6f;
@@ -19,8 +19,7 @@ public class Spawner : MonoBehaviour
 
     void Start()
     {
-        //Finding the game manager hame object in the scene
-        Manager = FindObjectOfType<GameManager>();
+        
     }
 
     void Update()

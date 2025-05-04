@@ -55,7 +55,7 @@ public class EnemyAi : MonoBehaviour
  
         //Calculating the distance between the player and the enemy
         float Distance = Vector3.Distance(transform.position, PlayerTransform.position);
-        Debug.Log(Distance);
+
 
        if (Distance <= agent.stoppingDistance)
         {
@@ -76,7 +76,6 @@ public class EnemyAi : MonoBehaviour
     {
         //Setting the attack bool to true
         animator.SetBool("Attack", true);
-        Debug.Log("Attck");
         //Checking if the current time is equal or larger
         //Than the current time + the attack cool down value 
         if (Time.time >= lastAttackTime + AttackCooldown)

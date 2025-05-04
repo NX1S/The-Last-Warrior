@@ -17,7 +17,7 @@ public class Gun : MonoBehaviour
     [SerializeField] float RecoilAmount;
     [SerializeField] float GunMovementSpeed;
     [SerializeField] float TimeToReload = 5f;
-    [SerializeField] float CurrentTime = 0f;
+    //[SerializeField] float CurrentTime = 0f;
     public float WeaponCost;
     public bool WeaponPurchased;
 
@@ -91,8 +91,8 @@ public class Gun : MonoBehaviour
 
     void UI()
     {
-        CurrentAmmoUI.text = CurrentAmmo.ToString();
-        MaxAmmoUI.text = AmmoInThePack.ToString();
+        //CurrentAmmoUI.text = CurrentAmmo.ToString();
+        //MaxAmmoUI.text = AmmoInThePack.ToString();
     }
 
    
@@ -148,6 +148,4 @@ public class Gun : MonoBehaviour
             transform.localPosition = Vector3.Lerp(transform.localPosition, OriginalPos, interpolationFactor);
         }
     }
-
-
 }
