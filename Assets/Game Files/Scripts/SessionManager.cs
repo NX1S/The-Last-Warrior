@@ -5,7 +5,7 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class SessionManager : MonoBehaviour
 {
-    Player player;
+    [SerializeField] GameObject player;
     [SerializeField] float timeLimit = 300f;
     [SerializeField] float currentTime;
     [SerializeField] TextMeshProUGUI timeUI;
@@ -22,7 +22,6 @@ public class SessionManager : MonoBehaviour
     {
         //int Score = score;
         currentTime = timeLimit;
-        player = FindAnyObjectByType<Player>();
     }
 
     void Update()
@@ -64,17 +63,18 @@ public class SessionManager : MonoBehaviour
         PointsUI.enabled = false;
         // Fade black screen
         UIAnimator.SetTrigger("Hide");
+        // Update score text
+        ScoreText.text = "Your Score:\n" + player.GetComponent<VRPlayer>().Points;
         // toggle menu UI
         MenuUI.SetActive(true);
+
     }
 
-    void Show()
+    void Show()                                        
     {
         // Enable the player from earning or losing any more health
         player.GetComponent<VRPlayer>().canLoseHealth = true;
         player.GetComponent<VRPlayer>().canAddPoints = true;
-        // Update score text
-        ScoreText.text = "Your Score:\n" + player.GetComponent<VRPlayer>().Points;
         // Main Camera: set culling mask to everything
         int layerToAdd = LayerMask.NameToLayer("Hands Only");
         mainCamera.cullingMask |= (1 << layerToAdd); // add the layer
@@ -89,12 +89,12 @@ public class SessionManager : MonoBehaviour
         UIAnimator.SetTrigger("Show");
     }
 
-    void Restart()
+    public void Restart()
     {
         SceneManager.LoadScene(1);
     }
 
-    void Quit()
+    public void Quit()
     {
         Application.Quit();
     }

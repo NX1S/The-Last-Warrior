@@ -1,21 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Harvest : MonoBehaviour
 {
-    Player player;
+    GameObject player;
     [SerializeField] int Points;
     void Start()
     {
-        player = FindAnyObjectByType<Player>();
+        player = GameObject.FindGameObjectWithTag("Player");
+
+        if (player == null)
+        {
+            Debug.LogWarning("No GameObject with tag 'Player' found.");
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.CompareTag("Box"))
+        if (collision.collider.CompareTag("Box"))
         {
-            player.AddPoints(Points);
+            player.GetComponent<VRPlayer>().AddPoints(Points);
         }
     }
 }
