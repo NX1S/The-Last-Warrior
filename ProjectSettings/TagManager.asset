@@ -7,6 +7,9 @@ TagManager:
   - Enemy
   - Environment
   - Box
+  - CinemachineTarget
+  - Left Hand
+  - Right Hand
   layers:
   - Default
   - TransparentFX
@@ -15,10 +18,10 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
-  - 
-  - 
-  - 
+  - Ray Interactable
+  - Direct Interactable
+  - Hands Only
+  - Enviroment
   - 
   - 
   - 

@@ -44,29 +44,21 @@ public class Gun : MonoBehaviour
     [SerializeField] GameObject Bullet;
     [SerializeField] Player Player;
     [SerializeField] Transform BulletOrigin;
-    [SerializeField] TextMeshProUGUI CurrentAmmoUI;
-    [SerializeField] TextMeshProUGUI MaxAmmoUI;
+    [SerializeField] TextMeshPro CurrentAmmoText;
     [SerializeField] ParticleSystem ShotFx;
+    [SerializeField] Animator GunAnimator;
     public GameObject Panel;
 
     void Start()
     {
         CurrentAmmo = MaxInAmmoInClip;
-        Player = GameObject.FindAnyObjectByType<Player>();
-
-
+        UI();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Reload();
-        UI();
-
-        if (CurrentAmmo == 0)
-        {
-            StartCoroutine("Reload");
-        }
+        // moved somewhere else
     }
 
 
@@ -84,18 +76,22 @@ public class Gun : MonoBehaviour
             CurrentAmmo--;
             ShotFx.Play();
             GunShot.Play();
+            GunAnimator.SetTrigger("Fire");
+            UI();
 
-
+            if (CurrentAmmo <= 0)
+            {
+                StartCoroutine("Reload");
+            }
         }
     }
 
     void UI()
     {
-        //CurrentAmmoUI.text = CurrentAmmo.ToString();
-        //MaxAmmoUI.text = AmmoInThePack.ToString();
+        CurrentAmmoText.text = CurrentAmmo.ToString();
     }
 
-   
+
 
     void Recoil()
     {
@@ -115,7 +111,9 @@ public class Gun : MonoBehaviour
 
     IEnumerator Reload()
     {
-            yield return new WaitForSeconds(TimeToReload);
+        yield return new WaitForSeconds(TimeToReload/2);
+        Debug.Log("Reload triggered");
+        GunAnimator.SetTrigger("Reload");
         float AmmoNeededToReload = MaxInAmmoInClip - CurrentAmmo;
 
         if (AmmoInThePack >= AmmoNeededToReload)
@@ -123,14 +121,13 @@ public class Gun : MonoBehaviour
             AmmoInThePack -= AmmoNeededToReload;
             CurrentAmmo += AmmoNeededToReload;
         }
-
         else
         {
             CurrentAmmo += AmmoInThePack;
             AmmoInThePack = 0;
-
         }
-
+        UI();
+        yield return new WaitForSeconds(TimeToReload/2);
     }
 
 
