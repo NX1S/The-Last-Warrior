@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class EnemyAi : MonoBehaviour
 {
     [Header("Components to be used")]
+    Player player;
     [SerializeField] Transform PlayerTransform;
     [SerializeField] Transform LimbsSpawnPos;
     [SerializeField] Animator animator;
@@ -34,6 +35,7 @@ public class EnemyAi : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         PlayerTransform = GameObject.FindWithTag("MainCamera").transform;
+        player = player = FindAnyObjectByType<Player>();
 
         //Playing the zombie sound
         /*if (!ZombieSound.isPlaying)
@@ -52,12 +54,12 @@ public class EnemyAi : MonoBehaviour
     void AiLogic()
     {
 
- 
+
         //Calculating the distance between the player and the enemy
         float Distance = Vector3.Distance(transform.position, PlayerTransform.position);
         //Debug.Log(Distance);
 
-       if (Distance <= agent.stoppingDistance)
+        if (Distance <= agent.stoppingDistance)
         {
             //Calling the attack function
             Attack();
@@ -82,7 +84,7 @@ public class EnemyAi : MonoBehaviour
         if (Time.time >= lastAttackTime + AttackCooldown)
         {
             //Decreasing the player health
-          // PlayerTransform.GetComponent<Player>().DecreasePlayerHealth(Damage);
+            player.DecreasePlayerHealth(Damage);
             // Reset attack cooldown
             lastAttackTime = Time.time;
         }
@@ -121,7 +123,7 @@ public class EnemyAi : MonoBehaviour
             }
             ParticleSystem Effect = Instantiate(DeathVFX, transform.position, Quaternion.identity);
             Effect.Play();
-            Destroy(Effect,3f);
+            Destroy(Effect, 3f);
             Destroy(LimbPart, 3f);
         }
     }
