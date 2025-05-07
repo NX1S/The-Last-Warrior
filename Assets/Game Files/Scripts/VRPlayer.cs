@@ -1,6 +1,7 @@
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -11,6 +12,7 @@ public class VRPlayer : MonoBehaviour
     [SerializeField] public float Points = 0f;
     [SerializeField] TextMeshPro PointsUI;
     [SerializeField] TextMeshPro HealthUI;
+    [SerializeField] GameObject SessionManager;
     public bool canAddPoints;
     public bool canLoseHealth;
 
@@ -20,15 +22,19 @@ public class VRPlayer : MonoBehaviour
         Points = 0;
         canAddPoints = true;
         canLoseHealth = true;
-    }
+    }   
 
-    public void DecreasePlayerHealth(int Damage)
+    public void DecreasePlayerHealth(float Damage)
     {
         //Decreasing the player health
         if (canLoseHealth)
         {
             CurrentHealth -= Damage;
             UpdateUI();
+            if( CurrentHealth <= 0)
+            {
+                SessionManager.GetComponent<SessionManager>().Hide(2);
+            }
         }
     }
 

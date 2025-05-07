@@ -8,8 +8,10 @@ public class SessionManager : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] float timeLimit = 300f;
     [SerializeField] float currentTime;
+    int ReasontoStop;
     [SerializeField] TextMeshProUGUI timeUI;
     [SerializeField] TextMeshProUGUI ScoreText;
+    [SerializeField] TextMeshProUGUI reasonText;
     [SerializeField] TextMeshPro PointsUI;
     [SerializeField] TextMeshPro HealthUI;
     [SerializeField] Animator UIAnimator;
@@ -22,6 +24,19 @@ public class SessionManager : MonoBehaviour
     {
         //int Score = score;
         currentTime = timeLimit;
+        // Enable the player from earning or losing any more health
+        player.GetComponent<VRPlayer>().canLoseHealth = true;
+        player.GetComponent<VRPlayer>().canAddPoints = true;
+        // Main Camera: set culling mask to everything
+        int layerToAdd = LayerMask.NameToLayer("Hands Only");
+        mainCamera.cullingMask |= (1 << layerToAdd); // add the layer
+        // Hand Camera: disable it
+        handsOnlyCamera.enabled = false;
+        // toggle menu UI
+        MenuUI.SetActive(false);
+        // Enable UI on hand
+        HealthUI.enabled = true;
+        PointsUI.enabled = true;
     }
 
     void Update()
@@ -34,7 +49,16 @@ public class SessionManager : MonoBehaviour
         if (currentTime <= 0)
         {
             currentTime = 0;
-            Hide();
+            Hide(1);
+        }
+
+        if(Input.GetKey("R"))
+        {
+            Restart();
+        }
+        if(Input.GetKey("S"))
+        {
+            Hide(3);
         }
     }
 
@@ -48,8 +72,21 @@ public class SessionManager : MonoBehaviour
         timeUI.text = $"{minutes}:{seconds:00}";
     }
 
-    void Hide()
+    public void Hide(int ReasontoStop)
     {
+        if(ReasontoStop == 1)
+        {
+            reasonText.text = "Time's up!";
+        } else if (ReasontoStop == 2)
+        {
+            reasonText.text = "You're Dead!";
+        }else if (ReasontoStop == 3)
+        {
+            reasonText.text = "Game Over!";
+        } else 
+        {
+            reasonText.text = "How did we get here?";
+        }
         // Disable the player from earning or losing any more health
         player.GetComponent<VRPlayer>().canLoseHealth = false;
         player.GetComponent<VRPlayer>().canAddPoints = false;
@@ -70,7 +107,7 @@ public class SessionManager : MonoBehaviour
 
     }
 
-    void Show()                                        
+    public void Show()                                        
     {
         // Enable the player from earning or losing any more health
         player.GetComponent<VRPlayer>().canLoseHealth = true;
@@ -91,7 +128,7 @@ public class SessionManager : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(0);
     }
 
     public void Quit()

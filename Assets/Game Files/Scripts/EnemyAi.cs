@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class EnemyAi : MonoBehaviour
 {
     [Header("Components to be used")]
-    Player player;
+    GameObject player;
     [SerializeField] Transform PlayerTransform;
     [SerializeField] Transform LimbsSpawnPos;
     [SerializeField] Animator animator;
@@ -22,6 +22,7 @@ public class EnemyAi : MonoBehaviour
     public float Health;
     public float Damage;
     public float ForceAmount;
+    public int pointsOnKill;
     public float AttackCooldown = 1f;
     private float lastAttackTime;
 
@@ -35,7 +36,8 @@ public class EnemyAi : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         PlayerTransform = GameObject.FindWithTag("MainCamera").transform;
-        player = player = FindAnyObjectByType<Player>();
+        player = GameObject.FindGameObjectWithTag("Player");
+
 
         //Playing the zombie sound
         /*if (!ZombieSound.isPlaying)
@@ -84,7 +86,7 @@ public class EnemyAi : MonoBehaviour
         if (Time.time >= lastAttackTime + AttackCooldown)
         {
             //Decreasing the player health
-            player.DecreasePlayerHealth(Damage);
+            player.GetComponent<VRPlayer>().DecreasePlayerHealth(Damage);
             // Reset attack cooldown
             lastAttackTime = Time.time;
         }
@@ -125,6 +127,7 @@ public class EnemyAi : MonoBehaviour
             Effect.Play();
             Destroy(Effect, 3f);
             Destroy(LimbPart, 3f);
+            player.GetComponent<VRPlayer>().AddPoints(pointsOnKill);
         }
     }
 

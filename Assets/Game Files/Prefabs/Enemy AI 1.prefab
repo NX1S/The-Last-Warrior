@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51265da67ca80634986ac2f44cf5ff59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerTransform: {fileID: 0}
+  PlayerTransform: {fileID: 7434131235943897170}
   LimbsSpawnPos: {fileID: 8528025646163712380}
   animator: {fileID: 0}
   gameManager: {fileID: 0}
@@ -181,8 +181,9 @@ MonoBehaviour:
   DeathVFX: {fileID: 7120648547493546318}
   ChaseRange: 5
   Health: 5
-  Damage: 5
+  Damage: 1
   ForceAmount: 2
+  pointsOnKill: 50
   AttackCooldown: 1
 --- !u!195 &5726380936202459306
 NavMeshAgent:

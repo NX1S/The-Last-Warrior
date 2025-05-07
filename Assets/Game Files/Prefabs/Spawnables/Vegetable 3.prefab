@@ -284,7 +284,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41b7581bfa01de1429b668e7fe09ed4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Points: 50
+  Points: 250
+  SFX: {fileID: 8759087225418862337}
 --- !u!82 &8759087225418862337
 AudioSource:
   m_ObjectHideFlags: 0

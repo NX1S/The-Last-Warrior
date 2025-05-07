@@ -37,7 +37,8 @@ public class Gun : MonoBehaviour
 
     //Sound Effects
     [Header("Sound Effects")]
-    [SerializeField] AudioSource GunShot;
+    [SerializeField] AudioSource GunShotSound;
+    [SerializeField] AudioSource ReloadSound;
 
 
     [Header("Weapon Components")]
@@ -75,7 +76,7 @@ public class Gun : MonoBehaviour
             Recoil();
             CurrentAmmo--;
             ShotFx.Play();
-            GunShot.Play();
+            GunShotSound    .Play();
             GunAnimator.SetTrigger("Fire");
             UI();
 
@@ -114,6 +115,7 @@ public class Gun : MonoBehaviour
         yield return new WaitForSeconds(TimeToReload/2);
         Debug.Log("Reload triggered");
         GunAnimator.SetTrigger("Reload");
+        ReloadSound.Play();
         float AmmoNeededToReload = MaxInAmmoInClip - CurrentAmmo;
 
         if (AmmoInThePack >= AmmoNeededToReload)
@@ -127,7 +129,7 @@ public class Gun : MonoBehaviour
             AmmoInThePack = 0;
         }
         UI();
-        yield return new WaitForSeconds(TimeToReload/2);
+        yield return new WaitForSeconds(4);
     }
 
 

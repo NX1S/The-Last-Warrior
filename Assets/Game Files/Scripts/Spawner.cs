@@ -11,7 +11,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] GameManager Manager;
 
     [Header("Spawn Rate")]
-    [SerializeField] float SpawnRate = 6f;
+    [SerializeField] float SpawnRate;
 
     [Header("Flags")]
     public bool CanSpawn = true;
